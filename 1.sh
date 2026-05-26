@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # =================== THIẾT LẬP BIẾN ===================
-SOURCE_DIR="/root/ios"
+SOURCE_DIR="/root/phutho"
 ADB_COMMAND="/usr/bin/adb"
 
 GREEN='\033[0;32m'
