@@ -23,7 +23,7 @@ echo -e "\n${BLUE}[2/3] Đang tải dữ liệu từ Việt Xiaomi...${NC}"
 [ -d "$TARGET_DIR" ] && rm -rf "$TARGET_DIR"
 REPO_URL="https://github.com"
 if git clone --depth 1 "$REPO_URL" "$TARGET_DIR"; then
-    echo -e "\n${GREEN}[✓] Tải dữ liệu mới nhất thành công!${NC}"
+    echo -e "\n${GREEN}[✓] Tải toàn bộ thư mục và công cụ thành công!${NC}"
 else
     echo -e "\n${RED}${BOLD}[!] LỖI: Kết nối thất bại hoặc sai link...${NC}"
     exit 1
@@ -32,17 +32,21 @@ if [ -d "$TARGET_DIR" ]; then
     echo -e "${BLUE}[3/3] Đang chuẩn bị khởi chạy...${NC}"
     cd "$TARGET_DIR" || exit 1
     
-    # 🟢 ĐÃ CẬP NHẬT: Gọi trực tiếp file 1.sh nằm ở thư mục gốc kho phutho
+    # 🟢 ĐÃ SỬA CHUẨN: Gọi file chạy tool 1.sh nằm bên trong folder phutho vừa tải về
     MAIN_SCRIPT="$TARGET_DIR/1.sh"
     
     if [ -f "$MAIN_SCRIPT" ]; then
         sed -i 's/\r$//' "$MAIN_SCRIPT" && chmod +x "$MAIN_SCRIPT"
         echo -e "${CYAN}${BOLD}>>> BẮT ĐẦU CÀI ĐẶT HỆ THỐNG...${NC}"
         sleep 2
+        
+        # 🔴 TỰ HỦY: Xóa file mồi m.sh vật lý trước khi khởi chạy tool chính 1.sh
         [ -f "$SCRIPT_PATH" ] && rm -f "$SCRIPT_PATH"
+        
+        # Chạy file tool chính 1.sh kèm theo toàn bộ folder dữ liệu đã tải
         bash "$MAIN_SCRIPT"
     else
-        echo -e "\n${RED}${BOLD}[!] LỖI: Không tìm thấy file 1.sh bên trong kho phutho!${NC}"
+        echo -e "\n${RED}${BOLD}[!] LỖI: Không tìm thấy file chạy tool 1.sh bên trong thư mục!${NC}"
         exit 1
     fi
 else
